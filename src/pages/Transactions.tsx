@@ -3,6 +3,9 @@ import { Search, Filter, Download, ArrowUp, ArrowDown } from 'lucide-react'
 import { transactions as defaultData } from '../data/mockData'
 import { api } from '../services/api'
 
+// Palette
+// #221F1C darkest | #4A3F35 rich | #AD8B6A light | #E4C9AB pale | #FCF6F0 icy
+
 const initialTransactions = [
   ...defaultData,
   { id: 9, merchant: 'D-Mart', category: 'Groceries', amount: -3200, date: 'Jul 11', emoji: '🛒' },
@@ -45,10 +48,10 @@ export default function Transactions() {
     <div className="max-w-4xl space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white">Transactions</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">July 2025</p>
+          <h1 className="text-xl font-bold text-[#221F1C]">Transactions</h1>
+          <p className="text-sm text-[#4A3F35] mt-0.5">July 2025</p>
         </div>
-        <button className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-sm px-3 py-2 rounded-xl transition-colors">
+        <button className="flex items-center gap-2 bg-white border border-[#E4C9AB] text-[#4A3F35] hover:bg-[#E4C9AB]/40 font-medium text-sm px-3 py-2 rounded-xl transition-colors">
           <Download size={14} />
           Export
         </button>
@@ -56,22 +59,22 @@ export default function Transactions() {
 
       {/* Summary */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-4 shadow-sm flex items-center gap-3">
-          <div className="w-9 h-9 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center">
-            <ArrowUp size={16} className="text-emerald-600" />
+        <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-4 shadow-sm flex items-center gap-3">
+          <div className="w-9 h-9 bg-[#E4C9AB]/50 rounded-xl flex items-center justify-center">
+            <ArrowUp size={16} className="text-[#4A3F35]" />
           </div>
           <div>
-            <p className="text-xs text-slate-400">Total Income</p>
-            <p className="text-lg font-bold text-emerald-600">+₹{totalIncome.toLocaleString()}</p>
+            <p className="text-xs text-[#AD8B6A]">Total Income</p>
+            <p className="text-lg font-bold text-[#4A3F35]">+₹{totalIncome.toLocaleString()}</p>
           </div>
         </div>
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-4 shadow-sm flex items-center gap-3">
-          <div className="w-9 h-9 bg-rose-100 dark:bg-rose-900/30 rounded-xl flex items-center justify-center">
-            <ArrowDown size={16} className="text-rose-600" />
+        <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-4 shadow-sm flex items-center gap-3">
+          <div className="w-9 h-9 bg-[#221F1C]/10 rounded-xl flex items-center justify-center">
+            <ArrowDown size={16} className="text-[#221F1C]" />
           </div>
           <div>
-            <p className="text-xs text-slate-400">Total Expenses</p>
-            <p className="text-lg font-bold text-rose-500">-₹{totalExpense.toLocaleString()}</p>
+            <p className="text-xs text-[#AD8B6A]">Total Expenses</p>
+            <p className="text-lg font-bold text-[#221F1C]">-₹{totalExpense.toLocaleString()}</p>
           </div>
         </div>
       </div>
@@ -79,23 +82,23 @@ export default function Transactions() {
       {/* Search & filter bar */}
       <div className="flex gap-3">
         <div className="relative flex-1">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#AD8B6A]" />
           <input
             type="text"
             placeholder="Search transactions..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-400 transition-all"
+            className="w-full pl-9 pr-4 py-2.5 text-sm bg-white border border-[#E4C9AB] rounded-xl text-[#221F1C] placeholder-[#AD8B6A] focus:outline-none focus:ring-2 focus:ring-[#AD8B6A]/30 focus:border-[#AD8B6A] transition-all"
           />
         </div>
-        <button className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 px-3 py-2.5 rounded-xl text-sm transition-colors">
+        <button className="flex items-center gap-2 bg-white border border-[#E4C9AB] text-[#4A3F35] hover:bg-[#E4C9AB]/40 px-3 py-2.5 rounded-xl text-sm transition-colors">
           <Filter size={14} />
           Filter
         </button>
         <select
           value={sort}
           onChange={e => setSort(e.target.value as 'date' | 'amount')}
-          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 px-3 py-2.5 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+          className="bg-white border border-[#E4C9AB] text-[#4A3F35] px-3 py-2.5 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#AD8B6A]/30"
         >
           <option value="date">Sort by Date</option>
           <option value="amount">Sort by Amount</option>
@@ -110,8 +113,8 @@ export default function Transactions() {
             onClick={() => setCategory(cat)}
             className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
               category === cat
-                ? 'bg-emerald-500 text-white shadow-sm'
-                : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                ? 'bg-[#4A3F35] text-[#FCF6F0] shadow-sm'
+                : 'bg-white border border-[#E4C9AB] text-[#4A3F35] hover:border-[#AD8B6A]'
             }`}
           >
             {cat}
@@ -120,32 +123,32 @@ export default function Transactions() {
       </div>
 
       {/* Transaction list */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden">
-        <div className="grid grid-cols-[auto_1fr_auto_auto] gap-4 px-5 py-3 border-b border-slate-100 dark:border-slate-800 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+      <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 shadow-sm overflow-hidden">
+        <div className="grid grid-cols-[auto_1fr_auto_auto] gap-4 px-5 py-3 border-b border-[#E4C9AB]/60 text-xs font-semibold text-[#AD8B6A] uppercase tracking-wider">
           <span>Icon</span>
           <span>Transaction</span>
           <span>Date</span>
           <span className="text-right">Amount</span>
         </div>
         {filtered.length === 0 ? (
-          <div className="py-12 text-center text-slate-400 text-sm">No transactions found</div>
+          <div className="py-12 text-center text-[#AD8B6A] text-sm">No transactions found</div>
         ) : (
-          filtered.map((tx, i) => (
+          filtered.map(tx => (
             <div
               key={tx.id}
-              className="grid grid-cols-[auto_1fr_auto_auto] gap-4 items-center px-5 py-3.5 border-b border-slate-50 dark:border-slate-800/50 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer"
+              className="grid grid-cols-[auto_1fr_auto_auto] gap-4 items-center px-5 py-3.5 border-b border-[#E4C9AB]/30 last:border-0 hover:bg-[#FCF6F0] transition-colors cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-lg flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#E4C9AB]/40 flex items-center justify-center text-lg flex-shrink-0">
                 {tx.emoji}
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">{tx.merchant}</p>
-                <p className="text-xs text-slate-400 mt-0.5">{tx.category}</p>
+                <p className="text-sm font-semibold text-[#221F1C]">{tx.merchant}</p>
+                <p className="text-xs text-[#AD8B6A] mt-0.5">{tx.category}</p>
               </div>
-              <span className="text-xs text-slate-400 whitespace-nowrap">{tx.date}</span>
+              <span className="text-xs text-[#AD8B6A] whitespace-nowrap">{tx.date}</span>
               <span
                 className={`text-sm font-bold text-right ${
-                  tx.amount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'
+                  tx.amount > 0 ? 'text-[#4A3F35]' : 'text-[#221F1C]'
                 }`}
               >
                 {tx.amount > 0 ? '+' : ''}₹{Math.abs(tx.amount).toLocaleString()}

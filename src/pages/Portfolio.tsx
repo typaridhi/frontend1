@@ -4,6 +4,9 @@ import {
   PieChart, Pie, Cell, BarChart, Bar,
 } from 'recharts'
 
+// Palette
+// #221F1C darkest | #4A3F35 rich | #AD8B6A light | #E4C9AB pale | #FCF6F0 icy
+
 const growthData = [
   { month: 'Jan', value: 180000 }, { month: 'Feb', value: 194000 },
   { month: 'Mar', value: 188000 }, { month: 'Apr', value: 210000 },
@@ -12,11 +15,11 @@ const growthData = [
 ]
 
 const allocationData = [
-  { name: 'Large Cap', value: 38, color: '#3B82F6' },
-  { name: 'Mid Cap', value: 24, color: '#10B981' },
-  { name: 'Small Cap', value: 18, color: '#F59E0B' },
-  { name: 'Debt/Bond', value: 10, color: '#6366F1' },
-  { name: 'Gold', value: 10, color: '#F97316' },
+  { name: 'Large Cap', value: 38, color: '#221F1C' },
+  { name: 'Mid Cap', value: 24, color: '#4A3F35' },
+  { name: 'Small Cap', value: 18, color: '#7A6450' },
+  { name: 'Debt/Bond', value: 10, color: '#AD8B6A' },
+  { name: 'Gold', value: 10, color: '#E4C9AB' },
 ]
 
 const monthlyReturns = [
@@ -43,30 +46,30 @@ export default function Portfolio() {
   return (
     <div className="max-w-5xl space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-slate-900 dark:text-white">Portfolio & Stock History</h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Your investment portfolio overview — July 2025</p>
+        <h1 className="text-xl font-bold text-[#221F1C]">Portfolio & Stock History</h1>
+        <p className="text-sm text-[#4A3F35] mt-0.5">Your investment portfolio overview — July 2025</p>
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-4 gap-4">
         {[
-          { label: 'Portfolio Value', value: `₹${(currentValue / 1000).toFixed(1)}K`, sub: 'Total current value', color: 'bg-emerald-500', pos: true, badge: '+17.1% all time' },
-          { label: "Today's Gain/Loss", value: `+₹${todayGain.toLocaleString()}`, sub: '+1.54% today', color: 'bg-blue-500', pos: true, badge: 'Market open' },
-          { label: 'Overall Returns', value: `+₹${totalReturn.toLocaleString()}`, sub: `${((totalReturn / totalInvested) * 100).toFixed(1)}% returns`, color: 'bg-violet-500', pos: true, badge: 'All time' },
-          { label: 'Total Invested', value: `₹${(totalInvested / 1000).toFixed(1)}K`, sub: 'Across 6 instruments', color: 'bg-amber-500', pos: true, badge: 'Principal' },
+          { label: 'Portfolio Value', value: `₹${(currentValue / 1000).toFixed(1)}K`, sub: 'Total current value', color: 'bg-[#4A3F35]', badge: '+17.1% all time' },
+          { label: "Today's Gain/Loss", value: `+₹${todayGain.toLocaleString()}`, sub: '+1.54% today', color: 'bg-[#AD8B6A]', badge: 'Market open' },
+          { label: 'Overall Returns', value: `+₹${totalReturn.toLocaleString()}`, sub: `${((totalReturn / totalInvested) * 100).toFixed(1)}% returns`, color: 'bg-[#221F1C]', badge: 'All time' },
+          { label: 'Total Invested', value: `₹${(totalInvested / 1000).toFixed(1)}K`, sub: 'Across 6 instruments', color: 'bg-[#7A6450]', badge: 'Principal' },
         ].map(c => (
-          <div key={c.label} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-all">
+          <div key={c.label} className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-start justify-between mb-3">
               <div className={`w-9 h-9 ${c.color} rounded-xl flex items-center justify-center shadow-sm`}>
-                <TrendingUp size={15} className="text-white" />
+                <TrendingUp size={15} className="text-[#FCF6F0]" />
               </div>
-              <span className="text-xs font-semibold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full">
+              <span className="text-xs font-semibold bg-[#E4C9AB]/50 text-[#4A3F35] px-2 py-0.5 rounded-full">
                 {c.badge}
               </span>
             </div>
-            <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{c.value}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{c.label}</p>
-            <p className="text-xs text-slate-400 mt-0.5">{c.sub}</p>
+            <p className="text-xl font-bold text-[#4A3F35]">{c.value}</p>
+            <p className="text-xs text-[#4A3F35] mt-0.5">{c.label}</p>
+            <p className="text-xs text-[#AD8B6A] mt-0.5">{c.sub}</p>
           </div>
         ))}
       </div>
@@ -74,32 +77,26 @@ export default function Portfolio() {
       {/* Charts row */}
       <div className="grid grid-cols-3 gap-4">
         {/* Growth line */}
-        <div className="col-span-2 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
+        <div className="col-span-2 bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Portfolio Growth</h3>
-            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-full">+41.3% since Jan</span>
+            <h3 className="text-sm font-semibold text-[#221F1C]">Portfolio Growth</h3>
+            <span className="text-xs font-bold text-[#4A3F35] bg-[#E4C9AB]/50 px-2 py-0.5 rounded-full">+41.3% since Jan</span>
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={growthData}>
-              <defs>
-                <linearGradient id="portfolioGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#10B981" stopOpacity={0.15} />
-                  <stop offset="100%" stopColor="#10B981" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-              <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={v => `₹${v / 1000}K`} width={42} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e2e8f0' }} formatter={v => [`₹${Number(v).toLocaleString()}`, 'Value']} />
-              <Line type="monotone" dataKey="value" stroke="#10B981" strokeWidth={2.5}
-                dot={false} activeDot={{ r: 5, fill: '#10B981' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E4C9AB" vertical={false} />
+              <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#AD8B6A' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 10, fill: '#AD8B6A' }} axisLine={false} tickLine={false} tickFormatter={v => `₹${v / 1000}K`} width={42} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E4C9AB' }} formatter={v => [`₹${Number(v).toLocaleString()}`, 'Value']} />
+              <Line type="monotone" dataKey="value" stroke="#4A3F35" strokeWidth={2.5}
+                dot={false} activeDot={{ r: 5, fill: '#AD8B6A' }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
         {/* Allocation donut */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Asset Allocation</h3>
+        <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
+          <h3 className="text-sm font-semibold text-[#221F1C] mb-3">Asset Allocation</h3>
           <ResponsiveContainer width="100%" height={140}>
             <PieChart>
               <Pie data={allocationData} cx="50%" cy="50%" innerRadius={40} outerRadius={62} paddingAngle={3} dataKey="value">
@@ -110,10 +107,10 @@ export default function Portfolio() {
           </ResponsiveContainer>
           <div className="space-y-1.5 mt-1">
             {allocationData.map(d => (
-              <div key={d.name} className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400">
+              <div key={d.name} className="flex items-center gap-1.5 text-xs text-[#4A3F35]">
                 <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: d.color }} />
                 <span className="flex-1 truncate">{d.name}</span>
-                <span className="font-bold text-slate-900 dark:text-white">{d.value}%</span>
+                <span className="font-bold text-[#221F1C]">{d.value}%</span>
               </div>
             ))}
           </div>
@@ -121,55 +118,55 @@ export default function Portfolio() {
       </div>
 
       {/* Monthly returns bar */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
-        <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Monthly Returns (%)</h3>
+      <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
+        <h3 className="text-sm font-semibold text-[#221F1C] mb-4">Monthly Returns (%)</h3>
         <ResponsiveContainer width="100%" height={160}>
           <BarChart data={monthlyReturns} barSize={36}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-            <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} width={32} />
-            <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e2e8f0' }} formatter={v => [`${v}%`, 'Return']} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E4C9AB" vertical={false} />
+            <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#AD8B6A' }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fontSize: 10, fill: '#AD8B6A' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} width={32} />
+            <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E4C9AB' }} formatter={v => [`${v}%`, 'Return']} />
             <Bar dataKey="ret" radius={[6, 6, 0, 0]}>
-              {monthlyReturns.map((e, i) => <Cell key={i} fill={e.ret >= 0 ? '#10B981' : '#FB7185'} />)}
+              {monthlyReturns.map((e, i) => <Cell key={i} fill={e.ret >= 0 ? '#4A3F35' : '#AD8B6A'} />)}
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
 
       {/* Holdings table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden">
-        <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800">
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Holdings</h3>
+      <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 shadow-sm overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#E4C9AB]/60">
+          <h3 className="text-sm font-semibold text-[#221F1C]">Holdings</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800">
+              <tr className="border-b border-[#E4C9AB]/60">
                 {['Stock / Fund', 'Type', 'Qty', 'Avg Price', 'Current', "Today's Chg", 'P&L'].map(h => (
-                  <th key={h} className="px-5 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">{h}</th>
+                  <th key={h} className="px-5 py-3 text-left text-xs font-semibold text-[#AD8B6A] uppercase tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {holdings.map((h, i) => (
-                <tr key={i} className="border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                <tr key={i} className="border-b border-[#E4C9AB]/30 hover:bg-[#FCF6F0] transition-colors">
                   <td className="px-5 py-3.5">
-                    <p className="text-sm font-semibold text-slate-900 dark:text-white">{h.name}</p>
+                    <p className="text-sm font-semibold text-[#221F1C]">{h.name}</p>
                   </td>
                   <td className="px-5 py-3.5">
-                    <span className="text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full">{h.type}</span>
+                    <span className="text-xs font-medium bg-[#E4C9AB]/50 text-[#4A3F35] px-2 py-0.5 rounded-full">{h.type}</span>
                   </td>
-                  <td className="px-5 py-3.5 text-sm text-slate-600 dark:text-slate-400">{h.qty}</td>
-                  <td className="px-5 py-3.5 text-sm text-slate-600 dark:text-slate-400">{h.avg}</td>
-                  <td className="px-5 py-3.5 text-sm font-bold text-slate-900 dark:text-white">{h.current}</td>
+                  <td className="px-5 py-3.5 text-sm text-[#4A3F35]">{h.qty}</td>
+                  <td className="px-5 py-3.5 text-sm text-[#4A3F35]">{h.avg}</td>
+                  <td className="px-5 py-3.5 text-sm font-bold text-[#221F1C]">{h.current}</td>
                   <td className="px-5 py-3.5">
-                    <div className={`flex items-center gap-1 text-sm font-semibold ${h.dayPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'}`}>
+                    <div className={`flex items-center gap-1 text-sm font-semibold ${h.dayPos ? 'text-[#4A3F35]' : 'text-[#AD8B6A]'}`}>
                       {h.dayPos ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
                       {h.day}
                     </div>
                   </td>
                   <td className="px-5 py-3.5">
-                    <span className={`text-sm font-bold ${h.pnlPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'}`}>
+                    <span className={`text-sm font-bold ${h.pnlPos ? 'text-[#4A3F35]' : 'text-[#AD8B6A]'}`}>
                       {h.pnl}
                     </span>
                   </td>
@@ -181,24 +178,24 @@ export default function Portfolio() {
       </div>
 
       {/* AI Portfolio Insights */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-blue-500/10 blur-3xl" />
+      <div className="bg-gradient-to-r from-[#221F1C] to-[#4A3F35] rounded-2xl p-5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-[#AD8B6A]/15 blur-3xl" />
         <div className="relative">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-blue-500/20 rounded-xl flex items-center justify-center">
-              <Sparkles size={14} className="text-blue-400" />
+            <div className="w-8 h-8 bg-[#AD8B6A]/25 rounded-xl flex items-center justify-center">
+              <Sparkles size={14} className="text-[#E4C9AB]" />
             </div>
-            <span className="text-sm font-semibold text-white">AI Portfolio Insights</span>
+            <span className="text-sm font-semibold text-[#FCF6F0]">AI Portfolio Insights</span>
           </div>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { text: 'Technology stocks form 62% of your equity portfolio. High concentration risk.', icon: '⚠️', type: 'warn' },
-              { text: 'Consider diversifying into healthcare and banking sectors for better balance.', icon: '💡', type: 'tip' },
-              { text: 'Portfolio volatility increased by 8% this month. Review small-cap exposure.', icon: '📊', type: 'info' },
+              { text: 'Technology stocks form 62% of your equity portfolio. High concentration risk.', icon: '⚠️' },
+              { text: 'Consider diversifying into healthcare and banking sectors for better balance.', icon: '💡' },
+              { text: 'Portfolio volatility increased by 8% this month. Review small-cap exposure.', icon: '📊' },
             ].map((tip, i) => (
               <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <span className="text-2xl block mb-2">{tip.icon}</span>
-                <p className="text-sm text-slate-300 leading-relaxed">{tip.text}</p>
+                <p className="text-sm text-[#E4C9AB] leading-relaxed">{tip.text}</p>
               </div>
             ))}
           </div>

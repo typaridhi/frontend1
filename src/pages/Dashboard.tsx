@@ -18,6 +18,10 @@ import { spendingByCategory as defaultCategoryData, monthlyData as defaultMonthl
 import { api } from '../services/api'
 import type { Page } from '../types'
 
+// Palette
+// #221F1C darkest | #4A3F35 rich | #AD8B6A light | #E4C9AB pale | #FCF6F0 icy
+const PIE_COLORS = ['#221F1C', '#4A3F35', '#7A6450', '#AD8B6A', '#C9A883', '#E4C9AB']
+
 interface DashboardProps {
   onNav: (p: Page) => void
   user?: any
@@ -50,11 +54,11 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
   }, [])
 
   const statCardsData = [
-    { title: 'Total Balance', value: summary ? `₹${summary.netWorth.toLocaleString()}` : '₹1,42,500', change: '+8.2%', icon: Wallet, bg: 'bg-emerald-500', positive: true },
-    { title: 'Monthly Income', value: summary ? `₹${summary.monthlyIncome.toLocaleString()}` : '₹85,000', change: 'Stable', icon: TrendingUp, bg: 'bg-blue-500', positive: true },
-    { title: 'Monthly Expenses', value: summary ? `₹${summary.monthlyExpense.toLocaleString()}` : '₹52,340', change: '+4.1%', icon: TrendingDown, bg: 'bg-rose-400', positive: false },
-    { title: 'Savings', value: summary ? `₹${(summary.monthlyIncome - summary.monthlyExpense).toLocaleString()}` : '₹32,660', change: '+12%', icon: PiggyBank, bg: 'bg-violet-500', positive: true },
-    { title: 'Health Score', value: summary ? `${summary.healthScore} / 100` : '84 / 100', change: 'Good', icon: Heart, bg: 'bg-amber-500', positive: true },
+    { title: 'Total Balance', value: summary ? `₹${summary.netWorth.toLocaleString()}` : '₹1,42,500', change: '+8.2%', icon: Wallet, bg: 'bg-[#4A3F35]', positive: true },
+    { title: 'Monthly Income', value: summary ? `₹${summary.monthlyIncome.toLocaleString()}` : '₹85,000', change: 'Stable', icon: TrendingUp, bg: 'bg-[#AD8B6A]', positive: true },
+    { title: 'Monthly Expenses', value: summary ? `₹${summary.monthlyExpense.toLocaleString()}` : '₹52,340', change: '+4.1%', icon: TrendingDown, bg: 'bg-[#221F1C]', positive: false },
+    { title: 'Savings', value: summary ? `₹${(summary.monthlyIncome - summary.monthlyExpense).toLocaleString()}` : '₹32,660', change: '+12%', icon: PiggyBank, bg: 'bg-[#AD8B6A]', positive: true },
+    { title: 'Health Score', value: summary ? `${summary.healthScore} / 100` : '84 / 100', change: 'Good', icon: Heart, bg: 'bg-[#4A3F35]', positive: true },
   ]
 
   const userName = user?.name || 'Urshita Madaan'
@@ -64,38 +68,38 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white">Welcome back, {userName} 👋</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Here's your live financial overview</p>
+          <h1 className="text-xl font-bold text-[#221F1C]">Welcome back, {userName} 👋</h1>
+          <p className="text-sm text-[#4A3F35] mt-0.5">Here's your live financial overview</p>
         </div>
         <div className="flex items-center gap-3">
           {!user && (
             <button
               onClick={() => onNav('login')}
-              className="text-xs font-semibold bg-emerald-500 hover:bg-emerald-600 text-white px-3.5 py-2 rounded-xl transition-colors shadow-sm"
+              className="text-xs font-semibold bg-[#4A3F35] hover:bg-[#221F1C] text-[#FCF6F0] px-3.5 py-2 rounded-xl transition-colors shadow-sm"
             >
               Sign In / Register
             </button>
           )}
-          <span className="text-xs font-medium text-slate-500 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5">
+          <span className="text-xs font-medium text-[#4A3F35] bg-white border border-[#E4C9AB] rounded-xl px-3 py-1.5">
             Active Workspace
           </span>
         </div>
       </div>
 
       {/* Bill Notification Banner */}
-      <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+      <div className="bg-[#E4C9AB]/40 border border-[#E4C9AB] rounded-2xl p-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-[#AD8B6A]/20 text-[#4A3F35] flex items-center justify-center flex-shrink-0">
             <BellRing size={18} />
           </div>
           <div>
-            <p className="text-sm font-semibold text-slate-900 dark:text-amber-200">Upcoming Bill Notification</p>
-            <p className="text-xs text-slate-600 dark:text-slate-400">Electricity bill (₹1,850) & Internet bill (₹1,499) due in 3 days</p>
+            <p className="text-sm font-semibold text-[#221F1C]">Upcoming Bill Notification</p>
+            <p className="text-xs text-[#4A3F35]">Electricity bill (₹1,850) & Internet bill (₹1,499) due in 3 days</p>
           </div>
         </div>
         <button
           onClick={() => onNav('insights')}
-          className="text-xs font-semibold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/40 hover:bg-amber-200 dark:hover:bg-amber-900/60 px-3 py-1.5 rounded-xl transition-colors"
+          className="text-xs font-semibold text-[#4A3F35] bg-[#E4C9AB] hover:bg-[#AD8B6A]/50 px-3 py-1.5 rounded-xl transition-colors"
         >
           View AI Reminders
         </button>
@@ -106,24 +110,24 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
         {statCardsData.map(card => (
           <div
             key={card.title}
-            className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-all group"
+            className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm hover:shadow-md transition-all group"
           >
             <div className="flex items-start justify-between mb-4">
               <div className={`w-9 h-9 ${card.bg} rounded-xl flex items-center justify-center shadow-sm`}>
-                <card.icon size={16} className="text-white" />
+                <card.icon size={16} className="text-[#FCF6F0]" />
               </div>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   card.positive
-                    ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400'
-                    : 'bg-rose-50 dark:bg-rose-900/20 text-rose-500 dark:text-rose-400'
+                    ? 'bg-[#E4C9AB]/50 text-[#4A3F35]'
+                    : 'bg-[#221F1C]/10 text-[#221F1C]'
                 }`}
               >
                 {card.change}
               </span>
             </div>
-            <p className="text-xl font-bold text-slate-900 dark:text-white mb-0.5">{card.value}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">{card.title}</p>
+            <p className="text-xl font-bold text-[#221F1C] mb-0.5">{card.value}</p>
+            <p className="text-xs text-[#4A3F35]">{card.title}</p>
           </div>
         ))}
       </div>
@@ -131,8 +135,8 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
       {/* Charts */}
       <div className="grid grid-cols-3 gap-4">
         {/* Pie chart */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Spending by Category</h3>
+        <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
+          <h3 className="text-sm font-semibold text-[#221F1C] mb-4">Spending by Category</h3>
           <ResponsiveContainer width="100%" height={160}>
             <PieChart>
               <Pie
@@ -144,17 +148,17 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
                 paddingAngle={3}
                 dataKey="value"
               >
-                {categories.map((entry, i) => (
-                  <Cell key={i} fill={entry.color} />
+                {categories.map((_, i) => (
+                  <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip formatter={(v) => [`${v}%`, '']} />
             </PieChart>
           </ResponsiveContainer>
           <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-2">
-            {categories.map(cat => (
-              <div key={cat.name} className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400">
-                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: cat.color }} />
+            {categories.map((cat, i) => (
+              <div key={cat.name} className="flex items-center gap-1.5 text-xs text-[#4A3F35]">
+                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: PIE_COLORS[i % PIE_COLORS.length] }} />
                 <span className="truncate">{cat.name}</span>
                 <span className="ml-auto font-medium">{cat.value}%</span>
               </div>
@@ -163,60 +167,60 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
         </div>
 
         {/* Bar chart */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
+        <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Income vs Expenses</h3>
-            <div className="flex items-center gap-3 text-xs text-slate-500">
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />Income</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-rose-400 inline-block" />Expenses</span>
+            <h3 className="text-sm font-semibold text-[#221F1C]">Income vs Expenses</h3>
+            <div className="flex items-center gap-3 text-xs text-[#4A3F35]">
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#AD8B6A] inline-block" />Income</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#4A3F35] inline-block" />Expenses</span>
             </div>
           </div>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={monthlyTrends} barSize={10} barGap={3}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-              <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E4C9AB" vertical={false} />
+              <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#AD8B6A' }} axisLine={false} tickLine={false} />
               <YAxis
-                tick={{ fontSize: 10, fill: '#94a3b8' }}
+                tick={{ fontSize: 10, fill: '#AD8B6A' }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={v => `₹${v / 1000}k`}
                 width={38}
               />
               <Tooltip
-                contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+                contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E4C9AB', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
                 formatter={v => [`₹${Number(v).toLocaleString()}`, '']}
               />
-              <Bar dataKey="income" fill="#10B981" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="expense" fill="#FB7185" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="income" fill="#AD8B6A" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="expense" fill="#4A3F35" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* Line chart */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Weekly Spending Trend</h3>
+        <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
+          <h3 className="text-sm font-semibold text-[#221F1C] mb-4">Weekly Spending Trend</h3>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={weeklyTrends}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-              <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E4C9AB" vertical={false} />
+              <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#AD8B6A' }} axisLine={false} tickLine={false} />
               <YAxis
-                tick={{ fontSize: 10, fill: '#94a3b8' }}
+                tick={{ fontSize: 10, fill: '#AD8B6A' }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={v => `₹${v}`}
                 width={42}
               />
               <Tooltip
-                contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+                contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E4C9AB', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
                 formatter={v => [`₹${Number(v).toLocaleString()}`, 'Spent']}
               />
               <Line
                 type="monotone"
                 dataKey="amount"
-                stroke="#10B981"
+                stroke="#4A3F35"
                 strokeWidth={2.5}
-                dot={{ fill: '#10B981', r: 4, strokeWidth: 2, stroke: '#fff' }}
-                activeDot={{ r: 6, fill: '#10B981' }}
+                dot={{ fill: '#4A3F35', r: 4, strokeWidth: 2, stroke: '#FCF6F0' }}
+                activeDot={{ r: 6, fill: '#AD8B6A' }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -226,12 +230,12 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
       {/* Bottom row */}
       <div className="grid grid-cols-3 gap-4">
         {/* Transactions table */}
-        <div className="col-span-2 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
+        <div className="col-span-2 bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Recent Transactions</h3>
+            <h3 className="text-sm font-semibold text-[#221F1C]">Recent Transactions</h3>
             <button
               onClick={() => onNav('transactions')}
-              className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 font-medium flex items-center gap-1"
+              className="text-xs text-[#AD8B6A] hover:text-[#4A3F35] font-medium flex items-center gap-1"
             >
               View all <ArrowRight size={12} />
             </button>
@@ -240,20 +244,20 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
             {txList.slice(0, 6).map(tx => (
               <div
                 key={tx.id}
-                className="flex items-center justify-between py-2.5 px-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                className="flex items-center justify-between py-2.5 px-2 rounded-xl hover:bg-[#FCF6F0] transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-base flex-shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-[#E4C9AB]/40 flex items-center justify-center text-base flex-shrink-0">
                     {tx.emoji}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">{tx.merchant}</p>
-                    <p className="text-xs text-slate-400">{tx.category} · {tx.date}</p>
+                    <p className="text-sm font-medium text-[#221F1C]">{tx.merchant}</p>
+                    <p className="text-xs text-[#AD8B6A]">{tx.category} · {tx.date}</p>
                   </div>
                 </div>
                 <span
                   className={`text-sm font-semibold ${
-                    tx.amount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'
+                    tx.amount > 0 ? 'text-[#AD8B6A]' : 'text-[#221F1C]'
                   }`}
                 >
                   {tx.amount > 0 ? '+' : ''}₹{Math.abs(tx.amount).toLocaleString()}
@@ -264,29 +268,29 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
         </div>
 
         {/* Goals Progress Widget */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm flex flex-col justify-between">
+        <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Financial Goals</h3>
+              <h3 className="text-sm font-semibold text-[#221F1C]">Financial Goals</h3>
               <button
                 onClick={() => onNav('goals')}
-                className="text-xs text-emerald-600 dark:text-emerald-400 font-medium"
+                className="text-xs text-[#AD8B6A] hover:text-[#4A3F35] font-medium"
               >
                 View Goals
               </button>
             </div>
             <div className="space-y-4">
               {[
-                { name: 'Emergency Fund', progress: 48, saved: '₹1,45,000', target: '₹3,00,000', color: 'bg-emerald-500' },
-                { name: 'Goa Vacation', progress: 64, saved: '₹32,000', target: '₹50,000', color: 'bg-blue-500' },
-                { name: 'MacBook Pro', progress: 42, saved: '₹75,000', target: '₹1,80,000', color: 'bg-violet-500' },
+                { name: 'Emergency Fund', progress: 48, saved: '₹1,45,000', target: '₹3,00,000', color: 'bg-[#4A3F35]' },
+                { name: 'Goa Vacation', progress: 64, saved: '₹32,000', target: '₹50,000', color: 'bg-[#AD8B6A]' },
+                { name: 'MacBook Pro', progress: 42, saved: '₹75,000', target: '₹1,80,000', color: 'bg-[#221F1C]' },
               ].map(goal => (
                 <div key={goal.name}>
                   <div className="flex justify-between text-xs mb-1.5">
-                    <span className="text-slate-700 dark:text-slate-300 font-medium">{goal.name}</span>
-                    <span className="text-slate-900 dark:text-white font-semibold">{goal.saved} / {goal.target}</span>
+                    <span className="text-[#4A3F35] font-medium">{goal.name}</span>
+                    <span className="text-[#221F1C] font-semibold">{goal.saved} / {goal.target}</span>
                   </div>
-                  <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-2 bg-[#E4C9AB]/50 rounded-full overflow-hidden">
                     <div
                       className={`h-full ${goal.color} rounded-full transition-all`}
                       style={{ width: `${goal.progress}%` }}
@@ -299,23 +303,23 @@ export default function Dashboard({ onNav, user }: DashboardProps) {
 
           <button
             onClick={() => onNav('financial-health')}
-            className="w-full mt-4 flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors"
+            className="w-full mt-4 flex items-center justify-center gap-2 bg-[#FCF6F0] hover:bg-[#E4C9AB]/40 text-[#4A3F35] text-xs font-semibold py-2.5 rounded-xl border border-[#E4C9AB] transition-colors"
           >
-            <Heart size={14} className="text-rose-500" />
+            <Heart size={14} className="text-[#AD8B6A]" />
             Check Health Score Breakdown
           </button>
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
-        <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Quick Actions</h3>
+      <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
+        <h3 className="text-sm font-semibold text-[#221F1C] mb-4">Quick Actions</h3>
         <div className="flex flex-wrap gap-3">
           {[
-            { label: 'Add Expense', icon: Plus, style: 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm shadow-emerald-500/25', page: 'add-expense' as Page },
-            { label: 'Scan Receipt', icon: Scan, style: 'bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/30', page: 'ocr' as Page },
-            { label: 'Ask AI Copilot', icon: Sparkles, style: 'bg-violet-50 dark:bg-violet-900/20 hover:bg-violet-100 dark:hover:bg-violet-900/30 text-violet-600 dark:text-violet-400 border border-violet-100 dark:border-violet-800/30', page: 'chat' as Page },
-            { label: 'View Insights', icon: TrendingUp, style: 'bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/30 text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-800/30', page: 'insights' as Page },
+            { label: 'Add Expense', icon: Plus, style: 'bg-[#4A3F35] hover:bg-[#221F1C] text-[#FCF6F0] shadow-sm shadow-[#4A3F35]/25', page: 'add-expense' as Page },
+            { label: 'Scan Receipt', icon: Scan, style: 'bg-[#E4C9AB]/40 hover:bg-[#E4C9AB]/70 text-[#4A3F35] border border-[#E4C9AB]', page: 'ocr' as Page },
+            { label: 'Ask AI Copilot', icon: Sparkles, style: 'bg-[#E4C9AB]/40 hover:bg-[#E4C9AB]/70 text-[#4A3F35] border border-[#E4C9AB]', page: 'chat' as Page },
+            { label: 'View Insights', icon: TrendingUp, style: 'bg-[#E4C9AB]/40 hover:bg-[#E4C9AB]/70 text-[#4A3F35] border border-[#E4C9AB]', page: 'insights' as Page },
           ].map(action => (
             <button
               key={action.label}

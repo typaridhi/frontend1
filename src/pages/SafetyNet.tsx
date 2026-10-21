@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { AlertTriangle, Shield, ChevronDown, ChevronUp, Zap } from 'lucide-react'
 
+// Palette
+// #221F1C darkest | #4A3F35 rich | #AD8B6A light | #E4C9AB pale | #FCF6F0 icy
+
 const liquidAssets = [
   { label: 'Savings Account', amount: 120000, type: 'liquid' },
   { label: 'Short-term FD (breakable)', amount: 80000, type: 'liquid' },
@@ -20,12 +23,22 @@ const essentialsTotal = monthlyEssentials.reduce((s, e) => s + e.amount, 0)
 const survivalMonths = Math.floor(liquidTotal / essentialsTotal)
 
 const waterfall = [
-  { step: 1, label: 'Liquid Savings', desc: 'Savings account balance — zero-friction access', amount: 120000, color: 'emerald' },
-  { step: 2, label: 'Break Short-term FD', desc: 'Penalty ~1% — minimal cost for urgent liquidity', amount: 80000, color: 'sky' },
-  { step: 3, label: 'Redeem Liquid Mutual Fund', desc: 'T+1 settlement — typically within 1 business day', amount: 45000, color: 'indigo' },
-  { step: 4, label: 'Cut Discretionary Subscriptions', desc: 'Cancel streaming, gym, and non-essential apps immediately', amount: 3500, color: 'amber' },
-  { step: 5, label: 'Secondary Assets (Gold/ETF)', desc: 'Sell partially if runway extends below 2 months', amount: 55000, color: 'rose' },
+  { step: 1, label: 'Liquid Savings', desc: 'Savings account balance — zero-friction access', amount: 120000 },
+  { step: 2, label: 'Break Short-term FD', desc: 'Penalty ~1% — minimal cost for urgent liquidity', amount: 80000 },
+  { step: 3, label: 'Redeem Liquid Mutual Fund', desc: 'T+1 settlement — typically within 1 business day', amount: 45000 },
+  { step: 4, label: 'Cut Discretionary Subscriptions', desc: 'Cancel streaming, gym, and non-essential apps immediately', amount: 3500 },
+  { step: 5, label: 'Secondary Assets (Gold/ETF)', desc: 'Sell partially if runway extends below 2 months', amount: 55000 },
 ]
+
+// Row background and step-circle color for each waterfall step (by position)
+const stepRowStyles = [
+  'bg-[#E4C9AB]/60 border-[#E4C9AB]',
+  'bg-[#E4C9AB]/45 border-[#E4C9AB]',
+  'bg-[#E4C9AB]/30 border-[#E4C9AB]',
+  'bg-[#AD8B6A]/15 border-[#AD8B6A]/40',
+  'bg-[#4A3F35]/10 border-[#4A3F35]/25',
+]
+const stepCircleStyles = ['bg-[#221F1C]', 'bg-[#4A3F35]', 'bg-[#7A6450]', 'bg-[#AD8B6A]', 'bg-[#C9A883]']
 
 const nonEssentialCats = ['Dining Out', 'Streaming', 'Shopping', 'Entertainment', 'Gym']
 
@@ -47,13 +60,13 @@ export default function SafetyNet() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-slate-900 dark:text-white">Safety Net & Contingency</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Emergency survival runway and crisis simulation</p>
+          <h1 className="text-xl font-bold text-[#221F1C]">Safety Net & Contingency</h1>
+          <p className="text-sm text-[#4A3F35] mt-0.5">Emergency survival runway and crisis simulation</p>
         </div>
         <div className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border ${
-          survivalMonths >= 6 ? 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-800/40 dark:text-emerald-400'
-            : survivalMonths >= 3 ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-900/20 dark:border-amber-800/40 dark:text-amber-400'
-            : 'bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-900/20 dark:border-rose-800/40 dark:text-rose-400'
+          survivalMonths >= 6 ? 'bg-[#E4C9AB]/50 border-[#E4C9AB] text-[#4A3F35]'
+            : survivalMonths >= 3 ? 'bg-[#AD8B6A]/20 border-[#AD8B6A]/50 text-[#4A3F35]'
+            : 'bg-[#221F1C]/10 border-[#221F1C]/30 text-[#221F1C]'
         }`}>
           <Shield size={14} />
           {survivalMonths >= 6 ? 'Well Protected' : survivalMonths >= 3 ? 'Moderate Risk' : 'Critical — Act Now'}
@@ -61,22 +74,22 @@ export default function SafetyNet() {
       </div>
 
       {/* Survival Runway hero */}
-      <div className={`rounded-2xl p-6 relative overflow-hidden text-white ${
-        crisisMode ? 'bg-gradient-to-r from-rose-600 to-rose-800' : 'bg-gradient-to-r from-slate-800 to-slate-900'
+      <div className={`rounded-2xl p-6 relative overflow-hidden text-[#FCF6F0] ${
+        crisisMode ? 'bg-gradient-to-r from-[#AD8B6A] to-[#4A3F35]' : 'bg-gradient-to-r from-[#4A3F35] to-[#221F1C]'
       }`}>
         <div className="absolute inset-0 overflow-hidden">
-          <div className={`absolute top-0 left-1/3 w-64 h-32 rounded-full blur-3xl ${crisisMode ? 'bg-rose-400/20' : 'bg-emerald-500/8'}`} />
+          <div className={`absolute top-0 left-1/3 w-64 h-32 rounded-full blur-3xl ${crisisMode ? 'bg-[#E4C9AB]/25' : 'bg-[#AD8B6A]/15'}`} />
         </div>
         <div className="relative flex items-center justify-between">
           <div>
-            <p className="text-slate-300 text-sm font-medium mb-1">
+            <p className="text-[#E4C9AB] text-sm font-medium mb-1">
               {crisisMode ? '⚠️ SURVIVAL BUDGET MODE ACTIVE' : 'Liquid Survival Runway'}
             </p>
             <div className="flex items-baseline gap-3 mb-2">
-              <span className="text-6xl font-black text-white">{crisisMode ? adjustedRunway : `${survivalMonths}M`}</span>
-              {!crisisMode && <span className="text-slate-400 text-base">months of runway</span>}
+              <span className="text-6xl font-black text-[#FCF6F0]">{crisisMode ? adjustedRunway : `${survivalMonths}M`}</span>
+              {!crisisMode && <span className="text-[#E4C9AB] text-base">months of runway</span>}
             </div>
-            <p className="text-slate-300 text-sm">
+            <p className="text-[#E4C9AB] text-sm">
               ₹{liquidTotal.toLocaleString()} liquid ÷ ₹{essentialsTotal.toLocaleString()}/mo non-negotiables
             </p>
           </div>
@@ -88,8 +101,8 @@ export default function SafetyNet() {
               { label: 'Gap to Target', val: `₹${Math.max(0, (essentialsTotal * 6 - liquidTotal) / 1000).toFixed(0)}K` },
             ].map(s => (
               <div key={s.label} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-center">
-                <p className="text-sm font-black text-white">{s.val}</p>
-                <p className="text-xs text-slate-300 mt-0.5">{s.label}</p>
+                <p className="text-sm font-black text-[#FCF6F0]">{s.val}</p>
+                <p className="text-xs text-[#E4C9AB] mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
@@ -97,63 +110,63 @@ export default function SafetyNet() {
       </div>
 
       {/* Crisis Simulator */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm">
-        <h2 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Crisis Simulator</h2>
+      <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-6 shadow-sm">
+        <h2 className="text-sm font-semibold text-[#221F1C] mb-4">Crisis Simulator</h2>
 
         <div className="grid grid-cols-2 gap-4 mb-5">
           <button
             onClick={() => setJobLoss(j => !j)}
             className={`p-4 rounded-xl border-2 text-left transition-all ${
-              jobLoss ? 'border-rose-400 bg-rose-50 dark:bg-rose-900/20' : 'border-slate-200 dark:border-slate-700 hover:border-rose-300'
+              jobLoss ? 'border-[#4A3F35] bg-[#E4C9AB]/40' : 'border-[#E4C9AB] hover:border-[#AD8B6A]'
             }`}
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-2xl">💼</span>
               <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                jobLoss ? 'bg-rose-500 border-rose-500' : 'border-slate-300'
+                jobLoss ? 'bg-[#4A3F35] border-[#4A3F35]' : 'border-[#AD8B6A]'
               }`}>
-                {jobLoss && <div className="w-2.5 h-2.5 rounded-full bg-white" />}
+                {jobLoss && <div className="w-2.5 h-2.5 rounded-full bg-[#FCF6F0]" />}
               </div>
             </div>
-            <p className="text-sm font-bold text-slate-900 dark:text-white">Sudden Job Loss</p>
-            <p className="text-xs text-slate-400 mt-0.5">Zero income scenario — essentials only</p>
+            <p className="text-sm font-bold text-[#221F1C]">Sudden Job Loss</p>
+            <p className="text-xs text-[#AD8B6A] mt-0.5">Zero income scenario — essentials only</p>
           </button>
 
           <div className={`p-4 rounded-xl border-2 transition-all ${
-            medicalBill ? 'border-amber-400 bg-amber-50 dark:bg-amber-900/20' : 'border-slate-200 dark:border-slate-700'
+            medicalBill ? 'border-[#4A3F35] bg-[#E4C9AB]/40' : 'border-[#E4C9AB]'
           }`}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-2xl">🏥</span>
               <button
                 onClick={() => setMedicalBill(m => !m)}
                 className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
-                  medicalBill ? 'bg-amber-500 border-amber-500' : 'border-slate-300'
+                  medicalBill ? 'bg-[#4A3F35] border-[#4A3F35]' : 'border-[#AD8B6A]'
                 }`}
               >
-                {medicalBill && <div className="w-2.5 h-2.5 rounded-full bg-white" />}
+                {medicalBill && <div className="w-2.5 h-2.5 rounded-full bg-[#FCF6F0]" />}
               </button>
             </div>
-            <p className="text-sm font-bold text-slate-900 dark:text-white mb-2">Emergency Medical Bill</p>
+            <p className="text-sm font-bold text-[#221F1C] mb-2">Emergency Medical Bill</p>
             <div className="relative">
-              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 font-medium">₹</span>
+              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-[#AD8B6A] font-medium">₹</span>
               <input
                 type="number"
                 value={medAmount}
                 onChange={e => setMedAmount(Number(e.target.value))}
                 onClick={() => setMedicalBill(true)}
-                className="w-full pl-6 pr-2 py-1.5 text-xs border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                className="w-full pl-6 pr-2 py-1.5 text-xs border border-[#E4C9AB] rounded-lg bg-[#FCF6F0] text-[#221F1C] focus:outline-none focus:ring-2 focus:ring-[#AD8B6A]/40"
               />
             </div>
           </div>
         </div>
 
         {(jobLoss || medicalBill) && (
-          <div className="bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/40 rounded-xl p-4 mb-4">
-            <div className="flex items-center gap-2 text-rose-700 dark:text-rose-400 font-semibold text-sm mb-1">
+          <div className="bg-[#E4C9AB]/40 border border-[#E4C9AB] rounded-xl p-4 mb-4">
+            <div className="flex items-center gap-2 text-[#221F1C] font-semibold text-sm mb-1">
               <AlertTriangle size={14} />
               Simulated Runway: {adjustedRunway}
             </div>
-            <p className="text-xs text-rose-600 dark:text-rose-400">
+            <p className="text-xs text-[#4A3F35]">
               Liquid reserves: ₹{Math.max(0, adjustedLiquid).toLocaleString()} — {jobLoss ? 'zero income' : 'income intact'} scenario
             </p>
           </div>
@@ -163,8 +176,8 @@ export default function SafetyNet() {
           onClick={() => setCrisisMode(m => !m)}
           className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${
             crisisMode
-              ? 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
-              : 'bg-rose-500 hover:bg-rose-600 text-white shadow-sm shadow-rose-500/20'
+              ? 'bg-[#E4C9AB] text-[#4A3F35]'
+              : 'bg-[#4A3F35] hover:bg-[#221F1C] text-[#FCF6F0] shadow-sm shadow-[#4A3F35]/20'
           }`}
         >
           <Zap size={15} />
@@ -172,11 +185,11 @@ export default function SafetyNet() {
         </button>
 
         {crisisMode && (
-          <div className="mt-3 p-3 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/40 rounded-xl">
-            <p className="text-xs font-semibold text-rose-700 dark:text-rose-400 mb-2">Non-essential categories — PAUSED:</p>
+          <div className="mt-3 p-3 bg-[#E4C9AB]/40 border border-[#E4C9AB] rounded-xl">
+            <p className="text-xs font-semibold text-[#4A3F35] mb-2">Non-essential categories — PAUSED:</p>
             <div className="flex flex-wrap gap-2">
               {nonEssentialCats.map(c => (
-                <span key={c} className="text-xs bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/40 px-2.5 py-1 rounded-full line-through">
+                <span key={c} className="text-xs bg-[#FCF6F0] text-[#4A3F35] border border-[#E4C9AB] px-2.5 py-1 rounded-full line-through">
                   {c}
                 </span>
               ))}
@@ -186,33 +199,24 @@ export default function SafetyNet() {
       </div>
 
       {/* Waterfall Liquidation Plan */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm">
-        <h2 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Waterfall Liquidation Priority Plan</h2>
+      <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-6 shadow-sm">
+        <h2 className="text-sm font-semibold text-[#221F1C] mb-4">Waterfall Liquidation Priority Plan</h2>
         <div className="space-y-2">
           {waterfall.map((item, idx) => (
             <div key={item.step}>
               <button
                 onClick={() => setExpanded(expanded === idx ? null : idx)}
-                className={`w-full flex items-center gap-3 p-4 rounded-xl border text-left transition-all ${
-                  item.color === 'emerald' ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800/40'
-                    : item.color === 'sky' ? 'bg-sky-50 dark:bg-sky-900/20 border-sky-200 dark:border-sky-800/40'
-                    : item.color === 'indigo' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800/40'
-                    : item.color === 'amber' ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800/40'
-                    : 'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800/40'
-                }`}
+                className={`w-full flex items-center gap-3 p-4 rounded-xl border text-left transition-all ${stepRowStyles[idx]}`}
               >
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-black flex-shrink-0 ${
-                  item.color === 'emerald' ? 'bg-emerald-500' : item.color === 'sky' ? 'bg-sky-500'
-                    : item.color === 'indigo' ? 'bg-indigo-500' : item.color === 'amber' ? 'bg-amber-500' : 'bg-rose-500'
-                }`}>
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[#FCF6F0] text-xs font-black flex-shrink-0 ${stepCircleStyles[idx]}`}>
                   {item.step}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white">{item.label}</p>
-                  {expanded === idx && <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{item.desc}</p>}
+                  <p className="text-sm font-semibold text-[#221F1C]">{item.label}</p>
+                  {expanded === idx && <p className="text-xs text-[#4A3F35] mt-1">{item.desc}</p>}
                 </div>
-                <span className="text-sm font-bold text-slate-700 dark:text-slate-300">₹{item.amount.toLocaleString()}</span>
-                {expanded === idx ? <ChevronUp size={14} className="text-slate-400" /> : <ChevronDown size={14} className="text-slate-400" />}
+                <span className="text-sm font-bold text-[#4A3F35]">₹{item.amount.toLocaleString()}</span>
+                {expanded === idx ? <ChevronUp size={14} className="text-[#AD8B6A]" /> : <ChevronDown size={14} className="text-[#AD8B6A]" />}
               </button>
             </div>
           ))}
@@ -220,19 +224,19 @@ export default function SafetyNet() {
       </div>
 
       {/* Monthly essentials breakdown */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm">
-        <h2 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Non-Negotiable Monthly Expenses</h2>
+      <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-6 shadow-sm">
+        <h2 className="text-sm font-semibold text-[#221F1C] mb-4">Non-Negotiable Monthly Expenses</h2>
         <div className="space-y-2">
           {monthlyEssentials.map(e => (
-            <div key={e.label} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
+            <div key={e.label} className="flex items-center justify-between p-3 rounded-xl bg-[#FCF6F0]">
               <div className="flex items-center gap-2.5">
                 <span className="text-lg">{e.icon}</span>
-                <span className="text-sm text-slate-700 dark:text-slate-300">{e.label}</span>
+                <span className="text-sm text-[#4A3F35]">{e.label}</span>
               </div>
-              <span className="text-sm font-bold text-slate-900 dark:text-white">₹{e.amount.toLocaleString()}</span>
+              <span className="text-sm font-bold text-[#221F1C]">₹{e.amount.toLocaleString()}</span>
             </div>
           ))}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900 dark:bg-slate-700 text-white">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-[#221F1C] text-[#FCF6F0]">
             <span className="text-sm font-bold">Total Monthly Essentials</span>
             <span className="text-sm font-black">₹{essentialsTotal.toLocaleString()}</span>
           </div>

@@ -1,3 +1,6 @@
+
+
+
 import { useState, useEffect } from 'react'
 import type { Page } from './types'
 import { api } from './services/api'
@@ -19,7 +22,6 @@ import Settings from './pages/Settings'
 import AddExpense from './pages/AddExpense'
 import Investments from './pages/Investments'
 import Portfolio from './pages/Portfolio'
-import Market from './pages/Market'
 import FinancialHealth from './pages/FinancialHealth'
 import AIDashboard from './pages/AIDashboard'
 import TimeMachine from './pages/TimeMachine'
@@ -93,7 +95,6 @@ export default function App() {
       {page === 'add-expense' && <AddExpense onNav={nav} />}
       {page === 'investments' && <Investments />}
       {page === 'portfolio' && <Portfolio />}
-      {page === 'market' && <Market />}
       {page === 'financial-health' && <FinancialHealth />}
       {page === 'ai-dashboard' && <AIDashboard />}
       {page === 'time-machine' && <TimeMachine />}

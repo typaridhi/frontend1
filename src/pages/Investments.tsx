@@ -1,5 +1,8 @@
 import { useState } from 'react'
-import { Sparkles, ChevronRight, Info, CheckCircle } from 'lucide-react'
+import { Sparkles, ChevronRight, Info } from 'lucide-react'
+
+// Palette
+// #221F1C darkest | #4A3F35 rich | #AD8B6A light | #E4C9AB pale | #FCF6F0 icy
 
 const products = [
   {
@@ -45,22 +48,23 @@ const products = [
 ]
 
 const riskColors: Record<string, { bg: string; text: string }> = {
-  'No Risk':       { bg: 'bg-emerald-50 dark:bg-emerald-900/20', text: 'text-emerald-600 dark:text-emerald-400' },
-  'Very Low':      { bg: 'bg-blue-50 dark:bg-blue-900/20',       text: 'text-blue-600 dark:text-blue-400' },
-  'Moderate':      { bg: 'bg-amber-50 dark:bg-amber-900/20',     text: 'text-amber-600 dark:text-amber-400' },
-  'Moderate–High': { bg: 'bg-orange-50 dark:bg-orange-900/20',   text: 'text-orange-600 dark:text-orange-400' },
-  'Low–Moderate':  { bg: 'bg-sky-50 dark:bg-sky-900/20',         text: 'text-sky-600 dark:text-sky-400' },
+  'No Risk':       { bg: 'bg-[#E4C9AB]/50', text: 'text-[#4A3F35]' },
+  'Very Low':      { bg: 'bg-[#E4C9AB]/50', text: 'text-[#4A3F35]' },
+  'Moderate':      { bg: 'bg-[#AD8B6A]/20', text: 'text-[#4A3F35]' },
+  'Moderate–High': { bg: 'bg-[#4A3F35]/15', text: 'text-[#221F1C]' },
+  'Low–Moderate':  { bg: 'bg-[#AD8B6A]/20', text: 'text-[#4A3F35]' },
 }
 
+const tagBase = 'bg-[#E4C9AB]/60 text-[#4A3F35]'
 const tagColors: Record<string, string> = {
-  rose:    'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400',
-  blue:    'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400',
-  emerald: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400',
-  violet:  'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400',
-  indigo:  'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400',
-  amber:   'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400',
-  green:   'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400',
-  teal:    'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400',
+  rose:    'bg-[#4A3F35] text-[#FCF6F0]',
+  blue:    tagBase,
+  emerald: 'bg-[#AD8B6A]/25 text-[#4A3F35]',
+  violet:  tagBase,
+  indigo:  tagBase,
+  amber:   tagBase,
+  green:   tagBase,
+  teal:    tagBase,
 }
 
 const profiles = ['Conservative', 'Moderate', 'Aggressive'] as const
@@ -72,32 +76,32 @@ export default function Investments() {
   return (
     <div className="max-w-5xl space-y-6">
       {/* Header banner */}
-      <div className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-white/10 blur-3xl" />
+      <div className="bg-gradient-to-r from-[#4A3F35] to-[#221F1C] rounded-2xl p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-[#AD8B6A]/20 blur-3xl" />
         <div className="relative flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Sparkles size={16} className="text-emerald-100" />
-              <span className="text-sm font-semibold text-emerald-100 uppercase tracking-wider">AI-Powered</span>
+              <Sparkles size={16} className="text-[#E4C9AB]" />
+              <span className="text-sm font-semibold text-[#E4C9AB] uppercase tracking-wider">AI-Powered</span>
             </div>
-            <h1 className="text-2xl font-bold text-white mb-1">Personalised Investment Suggestions</h1>
-            <p className="text-emerald-100 text-sm">Based on your income ₹85,000, savings rate 38%, and risk profile.</p>
+            <h1 className="text-2xl font-bold text-[#FCF6F0] mb-1">Personalised Investment Suggestions</h1>
+            <p className="text-[#E4C9AB] text-sm">Based on your income ₹85,000, savings rate 38%, and risk profile.</p>
           </div>
-          <div className="text-center bg-white/10 border border-white/20 rounded-2xl p-4 text-white flex-shrink-0">
+          <div className="text-center bg-white/10 border border-white/20 rounded-2xl p-4 text-[#FCF6F0] flex-shrink-0">
             <p className="text-3xl font-black">₹8,000</p>
-            <p className="text-xs text-emerald-100 mt-0.5">Monthly invest capacity</p>
+            <p className="text-xs text-[#E4C9AB] mt-0.5">Monthly invest capacity</p>
           </div>
         </div>
       </div>
 
       {/* Risk profile widget */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
+      <div className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Your Risk Profile</h3>
-            <p className="text-xs text-slate-400 mt-0.5">Affects which instruments are highlighted for you</p>
+            <h3 className="text-sm font-semibold text-[#221F1C]">Your Risk Profile</h3>
+            <p className="text-xs text-[#AD8B6A] mt-0.5">Affects which instruments are highlighted for you</p>
           </div>
-          <span className="text-xs font-semibold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-2.5 py-1 rounded-full">
+          <span className="text-xs font-semibold bg-[#E4C9AB]/50 text-[#4A3F35] px-2.5 py-1 rounded-full">
             Current: {riskProfile}
           </span>
         </div>
@@ -108,44 +112,44 @@ export default function Investments() {
               onClick={() => setRiskProfile(p)}
               className={`flex-1 py-3 rounded-xl text-sm font-semibold border transition-all ${
                 riskProfile === p
-                  ? p === 'Conservative' ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
-                    : p === 'Moderate' ? 'bg-emerald-500 text-white border-emerald-500 shadow-sm'
-                    : 'bg-rose-500 text-white border-rose-500 shadow-sm'
-                  : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                  ? p === 'Conservative' ? 'bg-[#AD8B6A] text-[#FCF6F0] border-[#AD8B6A] shadow-sm'
+                    : p === 'Moderate' ? 'bg-[#4A3F35] text-[#FCF6F0] border-[#4A3F35] shadow-sm'
+                    : 'bg-[#221F1C] text-[#FCF6F0] border-[#221F1C] shadow-sm'
+                  : 'bg-[#FCF6F0] border-[#E4C9AB] text-[#4A3F35] hover:border-[#AD8B6A]'
               }`}
             >
               {p === 'Conservative' ? '🛡️' : p === 'Moderate' ? '⚖️' : '🚀'} {p}
             </button>
           ))}
         </div>
-        <div className="mt-3 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+        <div className="mt-3 h-1.5 bg-[#E4C9AB]/50 rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
               width: riskProfile === 'Conservative' ? '25%' : riskProfile === 'Moderate' ? '55%' : '90%',
-              background: riskProfile === 'Conservative' ? '#3B82F6' : riskProfile === 'Moderate' ? '#10B981' : '#FB7185',
+              background: riskProfile === 'Conservative' ? '#AD8B6A' : riskProfile === 'Moderate' ? '#4A3F35' : '#221F1C',
             }}
           />
         </div>
       </div>
 
       {/* AI recommendation panel */}
-      <div className="bg-slate-900 dark:bg-slate-800 rounded-2xl p-5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-emerald-500/8 blur-3xl" />
+      <div className="bg-[#221F1C] rounded-2xl p-5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-[#AD8B6A]/10 blur-3xl" />
         <div className="relative flex items-start gap-4">
-          <div className="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-            <Sparkles size={16} className="text-emerald-400" />
+          <div className="w-10 h-10 bg-[#AD8B6A]/20 rounded-xl flex items-center justify-center flex-shrink-0">
+            <Sparkles size={16} className="text-[#E4C9AB]" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-white mb-2">Finshpere Recommendation</p>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              Based on your income and savings, <strong className="text-emerald-400">start with a 6-month emergency fund first</strong> (₹3.1L target).
-              Then allocate <strong className="text-white">₹3,000/month to a Nifty 50 index SIP</strong>, ₹2,000 to PPF, and ₹1,500 to a flexi-cap mutual fund.
-              This balanced approach suits your <strong className="text-white">{riskProfile}</strong> risk profile.
+            <p className="text-sm font-semibold text-[#FCF6F0] mb-2">Finshpere Recommendation</p>
+            <p className="text-sm text-[#E4C9AB] leading-relaxed">
+              Based on your income and savings, <strong className="text-[#FCF6F0]">start with a 6-month emergency fund first</strong> (₹3.1L target).
+              Then allocate <strong className="text-[#FCF6F0]">₹3,000/month to a Nifty 50 index SIP</strong>, ₹2,000 to PPF, and ₹1,500 to a flexi-cap mutual fund.
+              This balanced approach suits your <strong className="text-[#FCF6F0]">{riskProfile}</strong> risk profile.
             </p>
             <div className="flex gap-2 mt-3">
               {['SIP First', 'PPF for tax', 'FD as buffer'].map(tag => (
-                <span key={tag} className="text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full font-medium">{tag}</span>
+                <span key={tag} className="text-xs bg-[#AD8B6A]/25 text-[#E4C9AB] px-2.5 py-1 rounded-full font-medium">{tag}</span>
               ))}
             </div>
           </div>
@@ -154,28 +158,28 @@ export default function Investments() {
 
       {/* Product cards */}
       <div>
-        <h2 className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">Investment Options</h2>
+        <h2 className="text-sm font-semibold text-[#4A3F35] uppercase tracking-wider mb-4">Investment Options</h2>
         <div className="grid grid-cols-2 gap-4">
           {products.map(p => {
             const rc = riskColors[p.risk] || riskColors['Moderate']
             return (
-              <div key={p.name} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-all group">
+              <div key={p.name} className="bg-white rounded-2xl border border-[#E4C9AB]/60 p-5 shadow-sm hover:shadow-md transition-all group">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-2xl">
+                    <div className="w-11 h-11 rounded-2xl bg-[#E4C9AB]/40 flex items-center justify-center text-2xl">
                       {p.emoji}
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-slate-900 dark:text-white">{p.name}</h3>
+                      <h3 className="text-sm font-bold text-[#221F1C]">{p.name}</h3>
                       <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${tagColors[p.tagColor]}`}>{p.tag}</span>
                     </div>
                   </div>
-                  <button className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400">
+                  <button className="p-1.5 rounded-lg hover:bg-[#E4C9AB]/40 text-[#AD8B6A]">
                     <Info size={14} />
                   </button>
                 </div>
 
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">{p.desc}</p>
+                <p className="text-xs text-[#4A3F35] leading-relaxed mb-3">{p.desc}</p>
 
                 <div className="grid grid-cols-3 gap-2 mb-3">
                   {[
@@ -184,17 +188,17 @@ export default function Investments() {
                     { label: 'Horizon', value: p.horizon },
                   ].map(f => (
                     <div key={f.label} className="text-center">
-                      <p className="text-xs text-slate-400 mb-0.5">{f.label}</p>
-                      <p className={`text-xs font-bold ${f.extra ? `${f.extra.bg} ${f.extra.text} px-1.5 py-0.5 rounded-lg` : 'text-slate-900 dark:text-white'}`}>
+                      <p className="text-xs text-[#AD8B6A] mb-0.5">{f.label}</p>
+                      <p className={`text-xs font-bold ${f.extra ? `${f.extra.bg} ${f.extra.text} px-1.5 py-0.5 rounded-lg` : 'text-[#221F1C]'}`}>
                         {f.value}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800">
-                  <p className="text-xs text-slate-400">Best for: <span className="text-slate-600 dark:text-slate-300 font-medium">{p.suitedFor}</span></p>
-                  <button className="flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline group-hover:gap-2 transition-all">
+                <div className="flex items-center justify-between pt-3 border-t border-[#E4C9AB]/60">
+                  <p className="text-xs text-[#AD8B6A]">Best for: <span className="text-[#4A3F35] font-medium">{p.suitedFor}</span></p>
+                  <button className="flex items-center gap-1 text-xs font-semibold text-[#4A3F35] hover:underline group-hover:gap-2 transition-all">
                     Learn more <ChevronRight size={12} />
                   </button>
                 </div>

@@ -1,11 +1,18 @@
+
+
+
+
 import {
   LayoutDashboard, ArrowLeftRight, PieChart, Sparkles, Target,
   Scan, MessageSquare, BookOpen, Settings, TrendingUp, Heart, LogOut,
-  BarChart2, Globe, Activity, Lightbulb,
+  BarChart2, Activity, Lightbulb,
   Clock, Shield, Users,
 } from 'lucide-react'
 import type { Page } from '../types'
 import { api } from '../services/api'
+
+// Palette
+// #221F1C darkest | #4A3F35 rich | #AD8B6A light | #E4C9AB pale | #FCF6F0 icy
 
 const sections = [
   {
@@ -34,7 +41,6 @@ const sections = [
     label: 'Investments',
     items: [
       { icon: BarChart2,   label: 'Portfolio',         page: 'portfolio' as Page },
-      { icon: Globe,       label: 'Market',            page: 'market' as Page },
       { icon: Lightbulb,   label: 'Invest Ideas',      page: 'investments' as Page },
     ],
   },
@@ -78,16 +84,16 @@ export default function Sidebar({ currentPage, onNav, user, onLogout }: SidebarP
   }
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col z-20">
+    <aside className="fixed left-0 top-0 h-full w-64 bg-[#FCF6F0] border-r border-[#E4C9AB] flex flex-col z-20">
       {/* Logo */}
-      <div className="p-5 border-b border-slate-100 dark:border-slate-800">
+      <div className="p-5 border-b border-[#E4C9AB]/60">
         <button onClick={() => onNav('dashboard')} className="flex items-center gap-3 w-full">
-          <div className="w-9 h-9 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-sm">
-            <TrendingUp size={16} className="text-white" />
+          <div className="w-9 h-9 bg-gradient-to-br from-[#AD8B6A] to-[#4A3F35] rounded-xl flex items-center justify-center shadow-sm">
+            <TrendingUp size={16} className="text-[#FCF6F0]" />
           </div>
           <div className="text-left">
-            <p className="font-bold text-slate-900 dark:text-white text-sm leading-tight">Finshpere</p>
-            <p className="text-xs text-emerald-500 font-medium">Finance Copilot</p>
+            <p className="font-bold text-[#221F1C] text-sm leading-tight">Finshpere</p>
+            <p className="text-xs text-[#AD8B6A] font-medium">Finance Copilot</p>
           </div>
         </button>
       </div>
@@ -96,7 +102,7 @@ export default function Sidebar({ currentPage, onNav, user, onLogout }: SidebarP
       <nav className="flex-1 p-3 overflow-y-auto space-y-4">
         {sections.map(section => (
           <div key={section.label}>
-            <p className="text-xs font-semibold text-slate-400 dark:text-slate-600 uppercase tracking-wider px-3 pb-1">
+            <p className="text-xs font-semibold text-[#AD8B6A] uppercase tracking-wider px-3 pb-1">
               {section.label}
             </p>
             <div className="space-y-0.5">
@@ -108,16 +114,16 @@ export default function Sidebar({ currentPage, onNav, user, onLogout }: SidebarP
                     onClick={() => onNav(item.page)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
                       active
-                        ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400'
-                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                        ? 'bg-[#E4C9AB]/60 text-[#221F1C]'
+                        : 'text-[#4A3F35] hover:bg-[#E4C9AB]/30 hover:text-[#221F1C]'
                     }`}
                   >
                     <item.icon
                       size={15}
-                      className={active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'}
+                      className={active ? 'text-[#4A3F35]' : 'text-[#AD8B6A]'}
                     />
                     {item.label}
-                    {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-500" />}
+                    {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#4A3F35]" />}
                   </button>
                 )
               })}
@@ -127,29 +133,29 @@ export default function Sidebar({ currentPage, onNav, user, onLogout }: SidebarP
       </nav>
 
       {/* Switch to Junior + User profile */}
-      <div className="p-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
+      <div className="p-4 border-t border-[#E4C9AB]/60 space-y-2">
         <button
           onClick={handleSwitchJunior}
-          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/20 hover:bg-sky-100 dark:hover:bg-sky-900/30 transition-colors border border-sky-200 dark:border-sky-800/40"
+          className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-[#4A3F35] bg-[#E4C9AB]/40 hover:bg-[#E4C9AB]/70 transition-colors border border-[#E4C9AB]"
         >
-          <Users size={14} className="text-sky-500" />
+          <Users size={14} className="text-[#AD8B6A]" />
           Switch to Junior Profile
-          <span className="ml-auto text-xs bg-sky-200 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400 px-1.5 py-0.5 rounded-full font-semibold">Kids Mode</span>
+          <span className="ml-auto text-xs bg-[#4A3F35] text-[#FCF6F0] px-1.5 py-0.5 rounded-full font-semibold">Kids Mode</span>
         </button>
 
-        <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+        <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#E4C9AB]/30 transition-colors">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#AD8B6A] to-[#4A3F35] flex items-center justify-center text-[#FCF6F0] text-sm font-bold flex-shrink-0">
             {initial}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{userName}</p>
-            <p className="text-xs text-slate-400 truncate">{userEmail}</p>
+            <p className="text-sm font-semibold text-[#221F1C] truncate">{userName}</p>
+            <p className="text-xs text-[#AD8B6A] truncate">{userEmail}</p>
           </div>
           {onLogout && (
             <button
               onClick={onLogout}
               title="Log out"
-              className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-rose-500 transition-colors"
+              className="p-1.5 hover:bg-[#E4C9AB]/60 rounded-lg text-[#AD8B6A] hover:text-[#221F1C] transition-colors"
             >
               <LogOut size={15} />
             </button>
